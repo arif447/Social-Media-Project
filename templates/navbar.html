@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>{% block title_block %} Blogs {% endblock %}</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'App_Post:home' %}">Home</a>
+      </li>
+
+     <li class="nav-item active">
+        <a class="nav-link" href="{% url 'App_Post:post' %}">Create Post</a>
+      </li>
+       &nbsp; &nbsp;&nbsp;
+         <form class="form-inline" method="GET">
+              <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'App_Login:Logout_user' %}">Logout</a>
+        </li>
+         <li class="nav-item active">
+             {% if user.user_profile.profile_pic %}
+                    <a class="nav-link" href="{% url 'App_Login:user_profile' %}"><img src="/media/{{ user.user_profile.profile_pic }}" width="40px" height="40px" class="rounded-circle"></a>
+             {% else %}
+               <a class="nav-link" href="{% url 'App_Login:user_profile' %}"><img src="/media/arif.png" width="40px" height="40px" class="rounded-circle"></a>
+             {% endif %}
+      </li>
+
+    </ul>
+
+
+</nav>
+<div class="container" style="padding-top:20px"></div>
+{% block body_block %}
+
+{%  endblock %}
+
+</body>
+</html>

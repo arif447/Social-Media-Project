@@ -1,0 +1,69 @@
+{% extends 'navbar.html' %}
+{% block title_block %}
+{% endblock %}
+{% block body_block %}
+      <!-- this part is search for search user display -->
+    {% if search %}
+        {% for search_user in result %}
+            <div class="row">
+            <div class="col-sm-2">
+                {% if search_user.user_profile.profile_pic %}
+                <img src="/media/{{ search_user.user_profile.profile_pic }}" width="75px" height="75px" class="rounded-circle">
+                {% else %}
+                 <img src="/media/arif.png" width="75px" height="75px" class="rounded-circle">
+                {% endif %}
+            </div>
+            <div class="col-sm-10">
+               <a href="{% url 'App_Login:user_other' username=search_user.username %}">{{ search_user.username }}</a>
+                <br>
+                {{ search_user.user_profile.fullname }}
+            </div>
+            </div>
+        {% endfor %}
+        <!-- this part is home page for post display -->
+      {% else %}
+        <div class="row">
+        <div class="col-sm-8">
+         {% for post in Posts %}
+             <div style="border: 1px solid #ccc">
+                 <div style="padding: 10px">
+                      {% if post.author.user_profile.profile_pic %}
+                         <img src="/media/{{ post.author.user_profile.profile_pic }}" width="75px" height="75px" class="rounded-circle">
+                     {% else %}
+                         <img src="/media/arif.png" width="75px" height="75px" class="rounded-circle">
+                     {% endif %}
+                   <a href="{% url 'App_Login:user_other' username=post.author %}">{{ post.author }}</a>
+                 </div>
+              <img src="/media/{{ post.image }}" width="100%">
+               <div style="padding:20px">
+                   {% if post.pk in like_post_list %}
+                       <a href="{% url 'App_Post:unlike' pk=post.pk %}"> <i class="fa fa-heart-o" style="font-size:36px"></i></a>
+                   {% else %}
+                      <a href="{% url 'App_Post:like' pk=post.pk %}"> <i class="fa fa-heart" style="font-size:36px"></i></a>
+                   {% endif %}
+               </div>
+             </div>
+             <br>
+             <br>
+             <br>
+          {% endfor %}
+        </div>
+        <div class="col-sm-4">
+         <!-- this part is home page for login user profile display -->
+            <div class="row">
+                <div class="col-sm-4">
+                     {% if user.user_profile.profile_pic %}
+                <img src="/media/{{ user.user_profile.profile_pic }}" width="75px" height="75px" class="rounded-circle">
+                {% else %}
+                 <img src="/media/arif.png" width="75px" height="75px" class="rounded-circle">
+                {% endif %}
+                </div>
+                <div class="col-sm-8">
+                   <a href="{% url 'App_Login:user_profile' %}">{{ user.username }}</a>
+                </div>
+            </div>
+        </div>
+     {% endif %}
+{% endblock %}
+
+
